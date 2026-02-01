@@ -11,7 +11,7 @@ A minimalist, high-performance tech blog theme built with **Astro** and **Deno**
 
 ## 🎥 Showcase
 
-![Theme Demo](./public/assets/demo/theme-showcase.gif)
+![Theme Demo](./public/assets/demo/theme_showcase.gif)
 
 ## 🚀 Development
 
