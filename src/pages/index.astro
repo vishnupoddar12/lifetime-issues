@@ -10,7 +10,11 @@ const posts = await Astro.glob("./posts/*.md");
 			{
 				posts.map((post) => (
 					<li class="post-item">
-						<a href={post.url} class="post-link">
+						<a
+							href={post.url}
+							class="post-link"
+							aria-label={`Read article: ${post.frontmatter.title}`}
+						>
 							<span class="post-title">
 								{post.frontmatter.title}
 							</span>

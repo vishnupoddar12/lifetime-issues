@@ -7,8 +7,14 @@ const { title = "My Lightweight Blog" } = Astro.props;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
+        <meta
+            name="description"
+            content="A minimalist, high-performance blog built with Astro and Deno."
+        />
         <title>{title}</title>
-        <style is:global>
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        <style is:inline>
             :root {
                 /* Master Polish Palette - Light (Zen Editorial) */
                 --bg-color: #fcfbf9; /* Paper White - Warm & Organic */
@@ -348,7 +354,8 @@ const { title = "My Lightweight Blog" } = Astro.props;
                         style="display: flex; gap: 1.5rem; align-items: center;"
                     >
                         <!-- Add a dummy link for demo -->
-                        <a href="/about">About</a>
+                        <a href="/about" aria-label="About Digital Zen">About</a
+                        >
                         <button id="theme-toggle" aria-label="Toggle theme">
                             <svg
                                 class="icon-sun"
@@ -423,6 +430,23 @@ const { title = "My Lightweight Blog" } = Astro.props;
             document
                 .getElementById("theme-toggle")
                 ?.addEventListener("click", handleToggleClick);
+
+            // Handle bfcache restoration
+            window.addEventListener("pageshow", (event) => {
+                if (event.persisted) {
+                    const theme = localStorage.getItem("theme") || "light";
+                    if (theme === "dark") {
+                        document.documentElement.setAttribute(
+                            "data-theme",
+                            "dark",
+                        );
+                        document.documentElement.classList.add("dark");
+                    } else {
+                        document.documentElement.removeAttribute("data-theme");
+                        document.documentElement.classList.remove("dark");
+                    }
+                }
+            });
         </script>
     </body>
 </html>
