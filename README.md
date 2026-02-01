@@ -1,4 +1,7 @@
-# Digital Zen Blog
+# Lifetime Issues
+
+> **A "Digital Zen" blog theme for developers who need some peace.**  
+> *Debugging code, systems, and the lifetime of ideas.*
 
 A minimalist, high-performance tech blog theme built with **Astro** and **Deno**. Designed for readability and speed.
 
@@ -11,7 +14,7 @@ A minimalist, high-performance tech blog theme built with **Astro** and **Deno**
 
 ## 🎥 Showcase
 
-![Theme Demo](./public/assets/demo/theme_showcase.gif)
+![Theme Demo](./public/assets/demo/theme-showcase.gif)
 
 ## 🚀 Development
 
