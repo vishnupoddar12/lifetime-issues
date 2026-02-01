@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About | Digital Zen">
+    <section class="prose">
+        <p class="intro">
+            <strong>Digital Zen</strong> is a space for contemplative technology.
+            In a world of infinite scrolling and notification fatigue, we optimize
+            for depth, clarity, and silence.
+        </p>
+
+        <hr />
+
+        <h3>The Philosophy</h3>
+        <ul>
+            <li>
+                <strong>Signal over Noise:</strong> Prioritizing long-form, thoughtful
+                content over hot takes.
+            </li>
+            <li>
+                <strong>Minimalism:</strong> A design that gets out of the way. No
+                popups, no tracking, no distractions.
+            </li>
+            <li>
+                <strong>Craftsmanship:</strong> Code is not just a tool, but a medium
+                for expression.
+            </li>
+        </ul>
+
+        <h3>The Author</h3>
+        <p>
+            Hi, I'm a developer who loves building performant systems and
+            exploring the intersection of code and design. Through this blog, I
+            document my journey in mastering the craft of software engineering.
+        </p>
+    </section>
+
+    <style>
+        .prose {
+            margin-top: 3rem;
+            max-width: 65ch;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 3rem 0;
+            width: 100%;
+        }
+
+        strong {
+            font-weight: 700;
+            color: var(--text-color);
+        }
+    </style>
+</BaseLayout>

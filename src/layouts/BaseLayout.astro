@@ -247,11 +247,30 @@ const { title = "My Lightweight Blog" } = Astro.props;
                 color: var(--text-muted);
                 text-decoration: none;
                 letter-spacing: 0.02em;
+                position: relative;
             }
+
+            nav a::after {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 1.5px;
+                bottom: -2px;
+                left: 0;
+                background-color: var(--link-color);
+                transform: scaleX(0);
+                transform-origin: bottom left;
+                transition: transform 0.25s ease-out;
+            }
+
             nav a:hover {
                 background: none;
-                text-decoration: underline;
-                color: var(--link-color);
+                /* color stays inherited (muted) or we can implicitly leave it. 
+                   We remove the explicit color change to green. */
+            }
+
+            nav a:hover::after {
+                transform: scaleX(1);
             }
 
             /* Interactive Toggle */
@@ -260,19 +279,37 @@ const { title = "My Lightweight Blog" } = Astro.props;
                 border: 1px solid var(--border-color);
                 color: var(--text-muted);
                 cursor: pointer;
-                font-family: var(--font-ui);
-                font-size: 0.8rem;
-                font-weight: 500;
-                padding: 0.4rem 0.8rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem;
                 border-radius: 999px;
                 transition: all 0.2s ease;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
+                width: 2.5rem;
+                height: 2.5rem;
             }
 
             button#theme-toggle:hover {
                 background-color: var(--code-bg);
                 border-color: var(--border-color);
+                color: var(--text-color);
+            }
+
+            /* Icon Switching Logic */
+            /* Default (Light): Show Moon, Hide Sun */
+            .icon-sun {
+                display: none;
+            }
+            .icon-moon {
+                display: block;
+            }
+
+            /* Dark: Show Sun, Hide Moon */
+            html[data-theme="dark"] .icon-sun {
+                display: block;
+            }
+            html[data-theme="dark"] .icon-moon {
+                display: none;
             }
         </style>
         <script is:inline>
@@ -312,9 +349,53 @@ const { title = "My Lightweight Blog" } = Astro.props;
                     >
                         <!-- Add a dummy link for demo -->
                         <a href="/about">About</a>
-                        <button id="theme-toggle" aria-label="Toggle theme"
-                            >Theme</button
-                        >
+                        <button id="theme-toggle" aria-label="Toggle theme">
+                            <svg
+                                class="icon-sun"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"
+                                ></line>
+                                <line
+                                    x1="18.36"
+                                    y1="18.36"
+                                    x2="19.78"
+                                    y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"
+                                ></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"
+                                ></line>
+                            </svg>
+                            <svg
+                                class="icon-moon"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path
+                                    d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                                ></path>
+                            </svg>
+                        </button>
                     </div>
                 </nav>
             </main>

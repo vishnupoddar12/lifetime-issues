@@ -9,6 +9,10 @@ A minimalist, high-performance tech blog theme built with **Astro** and **Deno**
 - **Deployment**: Nginx (Static hosting)
 - **Styling**: Vanilla CSS with a focus on typography (Charter & System UI)
 
+## 🎥 Showcase
+
+![Theme Demo](./public/assets/demo/theme-showcase.gif)
+
 ## 🚀 Development
 
 Start the local development server:
