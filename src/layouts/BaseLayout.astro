@@ -1,0 +1,347 @@
+---
+const { title = "My Lightweight Blog" } = Astro.props;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <style is:global>
+            :root {
+                /* Master Polish Palette - Light (Zen Editorial) */
+                --bg-color: #fcfbf9; /* Paper White - Warm & Organic */
+                --text-color: #1a1a1a; /* Ink Black - Deep & Sharp */
+                --text-muted: #575757; /* Graphite - Soft contrast */
+                --link-color: #064e3b; /* Midnight Fern - Higher contrast */
+                --link-hover: #15803d; /* Vibrant Green - Clear visual feedback */
+                --accent-color: #d97706; /* Amber - Subtle energy for accents */
+
+                --code-bg: #f2f0eb; /* Recycled Paper */
+                --code-text: #27272a;
+                --border-color: #e5e2db; /* Warm Sand border */
+
+                --selection-bg: #ffe4e6; /* Rosewater highlight - Human touch */
+                --selection-text: #1a1a1a;
+
+                /* Typography */
+                --font-body:
+                    "Charter", "Bitstream Charter", "Sitka Text", "Cambria",
+                    serif;
+                --font-header:
+                    "Charter", "Bitstream Charter", serif; /* Editorial consistency */
+                --font-ui:
+                    system-ui, -apple-system, sans-serif; /* For Nav/UI elements */
+                --mono-font: "Menlo", "Consolas", "Monaco", monospace;
+
+                --max-width: 60ch; /* Tighter editorial width */
+            }
+
+            html[data-theme="dark"] {
+                /* Master Polish Palette - Dark (Obsidian) */
+                --bg-color: #0f0f10; /* Obsidian Void - Not just gray */
+                --text-color: #e8e8e8; /* Off-white, easier on eyes */
+                --text-muted: #a1a1aa;
+                --link-color: #4ade80; /* Neon Fern - Digital vibrancy */
+                --link-hover: #4ade80; /* Keep Neon for hover too */
+                --accent-color: #fbbf24;
+
+                --code-bg: #18181b;
+                --code-text: #e4e4e7;
+                --border-color: #27272a;
+
+                --selection-bg: #064e3b; /* Deep Emerald */
+                --selection-text: #ffffff;
+            }
+
+            /* Global Reset & Smoothness */
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: var(--font-body);
+                background-color: var(--bg-color);
+                color: var(--text-color);
+                line-height: 1.7;
+                margin: 0;
+                padding: 0;
+                transition:
+                    background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                    color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                font-size: 1.15rem; /* Slightly larger base for comfort */
+                -webkit-font-smoothing: antialiased; /* Crisp Mac rendering */
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            /* Custom Selection (The Highligher Effect) */
+            /* Custom Selection (The Highligher Effect) */
+            ::selection {
+                background-color: var(--selection-bg);
+                color: var(--selection-text);
+            }
+
+            /* Custom Scrollbar (Minimal) */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: var(--border-color);
+                border-radius: 4px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background-color: #a1a1aa;
+            }
+
+            main {
+                max-width: var(--max-width);
+                margin: 5rem auto; /* More luxurious top margin */
+                padding: 0 1.5rem;
+            }
+
+            /* Typography */
+            h1,
+            h2,
+            h3 {
+                font-family: var(--font-header);
+                color: var(--text-color);
+                margin-top: 2.5rem;
+                letter-spacing: -0.025em; /* Tighter headers */
+            }
+
+            h1 {
+                font-size: 2.75rem;
+                font-weight: 800;
+                line-height: 1.1;
+            }
+            h2 {
+                font-size: 1.75rem;
+                font-weight: 600;
+                margin-bottom: 1rem;
+                border-bottom: 2px solid var(--border-color); /* Thicker anchor */
+                padding-bottom: 0.5rem;
+            }
+            h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+            }
+
+            /* Editorial Links */
+            /* Editorial Links & Interactions */
+            a {
+                color: var(--link-color);
+                text-decoration: underline;
+                text-decoration-color: rgba(
+                    120,
+                    120,
+                    120,
+                    0.3
+                ); /* Subtle underline initially */
+                text-decoration-thickness: 1px;
+                text-underline-offset: 4px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            a:hover {
+                background-color: var(--selection-bg);
+                color: var(--selection-text);
+                text-decoration-color: transparent;
+                border-radius: 4px;
+                padding: 0 4px;
+                margin: 0 -4px;
+                box-decoration-break: clone;
+                -webkit-box-decoration-break: clone;
+                cursor: pointer;
+            }
+
+            /* Prose Lists */
+            ul,
+            ol {
+                margin: 1.5rem 0;
+                padding-left: 2rem;
+            }
+
+            li {
+                margin: 0.5rem 0;
+                padding-left: 0.5rem;
+            }
+
+            ul li::marker {
+                color: var(--accent-color);
+            }
+
+            ol li::marker {
+                color: var(--text-muted);
+                font-feature-settings: "tnum";
+            }
+
+            /* Dual Theme Support for Astro Code Blocks */
+            html.dark .astro-code,
+            html.dark .astro-code span {
+                background-color: var(--shiki-dark-bg) !important;
+                color: var(--shiki-dark) !important;
+            }
+
+            /* Code Blocks (Card Style) */
+            pre {
+                background-color: var(--code-bg);
+                color: var(--code-text);
+                padding: 1.5rem;
+                overflow-x: auto;
+                font-family: var(--mono-font);
+                font-size: 0.875em;
+                margin: 2.5rem 0;
+                border: 1px solid var(--border-color); /* Distinct edge */
+                border-radius: 6px;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Micro-depth */
+            }
+
+            /* Inline Code */
+            code {
+                font-family: var(--mono-font);
+                background-color: var(--code-bg);
+                color: var(--code-text);
+                padding: 0.15em 0.4em;
+                border-radius: 4px;
+                font-size: 0.85em;
+                border: 1px solid var(--border-color); /* Tactile border */
+            }
+
+            pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+                border-radius: 0;
+                border: none;
+            }
+
+            /* Images */
+            img,
+            figure {
+                max-width: 100%;
+                height: auto;
+                border-radius: 6px;
+                margin: 3rem auto;
+                display: block;
+                box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Navigation (Minimal) */
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 2.5rem 0;
+                margin-bottom: 4rem;
+            }
+
+            nav a {
+                font-family: var(--font-ui); /* Distinct UI font */
+                font-weight: 500;
+                font-size: 0.95rem;
+                color: var(--text-muted);
+                text-decoration: none;
+                letter-spacing: 0.02em;
+            }
+            nav a:hover {
+                background: none;
+                text-decoration: underline;
+                color: var(--link-color);
+            }
+
+            /* Interactive Toggle */
+            button#theme-toggle {
+                background: transparent;
+                border: 1px solid var(--border-color);
+                color: var(--text-muted);
+                cursor: pointer;
+                font-family: var(--font-ui);
+                font-size: 0.8rem;
+                font-weight: 500;
+                padding: 0.4rem 0.8rem;
+                border-radius: 999px;
+                transition: all 0.2s ease;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            button#theme-toggle:hover {
+                background-color: var(--code-bg);
+                border-color: var(--border-color);
+            }
+        </style>
+        <script is:inline>
+            // Prevent flash of incorrect theme
+            const theme = (() => {
+                if (
+                    typeof localStorage !== "undefined" &&
+                    localStorage.getItem("theme")
+                ) {
+                    return localStorage.getItem("theme");
+                }
+                if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+                    return "dark";
+                }
+                return "light";
+            })();
+            if (theme === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+                document.documentElement.classList.add("dark");
+            }
+            window.localStorage.setItem("theme", theme);
+        </script>
+    </head>
+    <body>
+        <header>
+            <main>
+                <nav
+                    style="display: flex; justify-content: space-between; align-items: center;"
+                >
+                    <a
+                        href="/"
+                        style="font-weight: 700; color: var(--text-color); font-family: var(--font-header); font-size: 1.2rem; letter-spacing: -0.02em;"
+                        >Digital Zen.</a
+                    >
+                    <div
+                        style="display: flex; gap: 1.5rem; align-items: center;"
+                    >
+                        <!-- Add a dummy link for demo -->
+                        <a href="/about">About</a>
+                        <button id="theme-toggle" aria-label="Toggle theme"
+                            >Theme</button
+                        >
+                    </div>
+                </nav>
+            </main>
+        </header>
+        <main>
+            <h1>{title}</h1>
+            <slot />
+        </main>
+        <script>
+            const handleToggleClick = () => {
+                const element = document.documentElement;
+
+                const isDark = element.hasAttribute("data-theme");
+                if (isDark) {
+                    element.removeAttribute("data-theme");
+                    element.classList.remove("dark");
+                    localStorage.setItem("theme", "light");
+                } else {
+                    element.setAttribute("data-theme", "dark");
+                    element.classList.add("dark");
+                    localStorage.setItem("theme", "dark");
+                }
+            };
+
+            document
+                .getElementById("theme-toggle")
+                ?.addEventListener("click", handleToggleClick);
+        </script>
+    </body>
+</html>

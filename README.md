@@ -1,43 +1,38 @@
-# Astro Starter Kit: Minimal
+# Digital Zen Blog
 
-```sh
-deno create astro@latest -- --template minimal
+A minimalist, high-performance tech blog theme built with **Astro** and **Deno**. Designed for readability and speed.
+
+## 🛠 Stack
+
+- **Framework**: [Astro](https://astro.build) (Static Site Generation)
+- **Runtime**: [Deno](https://deno.com)
+- **Deployment**: Nginx (Static hosting)
+- **Styling**: Vanilla CSS with a focus on typography (Charter & System UI)
+
+## 🚀 Development
+
+Start the local development server:
+
+```bash
+deno task dev
+# or
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Server runs at `http://localhost:4321`.
 
-## 🚀 Project Structure
+## 📦 Building for Production
 
-Inside of your Astro project, you'll see the following folders and files:
+Generate the static assets:
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+deno task build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+The output will be in the `./dist` folder.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## 🌍 Deployment
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `deno install`             | Installs dependencies                            |
-| `deno dev`             | Starts local dev server at `localhost:4321`      |
-| `deno build`           | Build your production site to `./dist/`          |
-| `deno preview`         | Preview your build locally, before deploying     |
-| `deno astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `deno astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+1.  **Build**: Run the build command above.
+2.  **Deploy**: Copy the contents of `./dist` to your server's web root (e.g., `/var/www/tech-blog`).
+3.  **Serve**: Ensure Nginx is configured to serve the static files (see `nginx.conf` for reference).

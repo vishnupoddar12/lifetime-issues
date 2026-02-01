@@ -1,17 +1,110 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+const posts = await Astro.glob("./posts/*.md");
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="My Blog">
+	<section class="post-list">
+		<h2>Recent Posts</h2>
+		<ul class="clean-list">
+			{
+				posts.map((post) => (
+					<li class="post-item">
+						<a href={post.url} class="post-link">
+							<span class="post-title">
+								{post.frontmatter.title}
+							</span>
+						</a>
+						<time datetime={post.frontmatter.pubDate}>
+							{new Date(
+								post.frontmatter.pubDate,
+							).toLocaleDateString("en-US", {
+								year: "numeric",
+								month: "long",
+								day: "numeric",
+							})}
+						</time>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<style>
+		.clean-list {
+			list-style: none;
+			padding: 0;
+			margin: 2rem 0;
+		}
+
+		.post-item {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 2rem;
+			border-left: 2px solid transparent; /* Alignment guide */
+			padding-left: 0;
+			transition: all 0.2s ease;
+		}
+
+		.post-link {
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			margin-bottom: 0.5rem;
+			position: relative;
+			/* Reset global link style overrides */
+			color: var(--text-color);
+		}
+
+		/* Override global hover */
+		.post-link:hover {
+			background-color: transparent !important;
+			color: var(--text-color) !important;
+			margin: 0; /* Reset global negative margin */
+			padding: 0; /* Reset global padding */
+			box-decoration-break: slice;
+			-webkit-box-decoration-break: slice;
+		}
+
+		.post-title {
+			font-size: 1.5rem;
+			font-weight: 700;
+			font-family: var(--font-header);
+			line-height: 1.2;
+			transition: color 0.2s ease;
+		}
+
+		/* The Terminal Pointer */
+		.post-link::before {
+			content: ">";
+			position: absolute;
+			left: -1.5rem; /* Hang it in the margin */
+			color: var(--accent-color); /* Amber/Retro for the indicator */
+			font-family: var(--mono-font);
+			font-weight: bold;
+			opacity: 0;
+			transform: translateX(-5px);
+			transition: all 0.2s ease;
+		}
+
+		.post-link:hover::before {
+			opacity: 1;
+			transform: translateX(0);
+		}
+
+		.post-link:hover .post-title {
+			color: var(--link-hover);
+			/* No underline, cleaner look with the pointer */
+			text-decoration: none;
+		}
+
+		time {
+			font-family: var(--font-ui);
+			font-size: 0.85rem;
+			color: var(--text-muted);
+			font-weight: 500;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+		}
+	</style>
+</BaseLayout>
